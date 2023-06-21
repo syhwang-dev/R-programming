@@ -94,12 +94,15 @@ quantile(x, 4/4)
 # 실습: 생활비(cost) 변수의 최빈수 구하기 
 # 단계 1: 최빈수는 빈도수가 가장 많은 변량을 의미
 length(x)
+head(x)
 x.t <- table(x)
 max(x.t)
+x.t
 
 
 # 단계 2: 두 개의 행을 묶어서 matrix 생성
 x.m <- rbind(x.t)
+x.m  # x.t와 같음.
 class(x.m)
 str(x.m)
 which(x.m[1, ] == 18)
@@ -107,6 +110,8 @@ which(x.m[1, ] == 18)
 # 단계 3: 데이터프레임으로 변경
 x.df <- as.data.frame(x.m)
 which(x.df[1, ] == 18)
+which(x.df[1, ] == 2)
+# 머지...
 
 # 단계 4: 최빈수와 변량 확인
 x.df[1, 19]

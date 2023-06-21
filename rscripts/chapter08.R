@@ -298,6 +298,7 @@ qplot(clarity, data = diamonds, colour = cut, geom = "bar")
 # 단계 4: geom = "point" 속성으로 산점도 그래프 그리기
 qplot(wt, mpg, data = mtcars, size = qsec, geom = "point")
 
+# 갑자기 차 정보 등장;
 # 단계 5: 산점도 그래프에 cyl 변수의 요인으로 포인트 크기 적용하고, 
 #         carb 변수의 요인으로 포인트 색 적용하기 
 qplot(wt, mpg, data = mtcars, size = factor(cyl),
@@ -308,6 +309,7 @@ qplot(wt, mpg, data = mtcars, size = factor(cyl),
 qplot(wt, mpg, data = mtcars, size = qsec, 
       color = factor(carb),
       shape = factor(cyl), geom = "point")
+# shape 사용
 
 # 단계 7: geom = "smooth" 속성으로 산점도 그래프에 평활 그리기
 qplot(wt, mpg, data = mtcars, 
@@ -433,8 +435,9 @@ ggmap(map)
 
 # 실습 : 2019년도 1월 대한민국 인구수를 기준으로 지역별 인구수 표시하기 
 # 단계 1: 데이터 셋 가져오기 
-pop <- read.csv(file.choose(), header = T)
-
+pop <- read.csv(file.choose(), header = T, fileEncoding = "cp949", encoding = "UTF-8")  # 파일 선택하기 창이 뜸.
+# fileEncoding = "cp949", encoding = "UTF-8" 파일에 한글이 있을 땐 입력
+head(pop)
 library(stringr)
 
 region <- pop$'지역명'
