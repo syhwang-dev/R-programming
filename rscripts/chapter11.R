@@ -111,7 +111,7 @@ which(x.m[1, ] == 18)
 x.df <- as.data.frame(x.m)
 which(x.df[1, ] == 18)
 which(x.df[1, ] == 2)
-# 머지...
+# 머지
 
 # 단계 4: 최빈수와 변량 확인
 x.df[1, 19]
