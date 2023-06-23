@@ -29,7 +29,7 @@ barplot(x)
 
 
 # 실습: 구성 비율 계산
-prop.table(x)
+prop.table(x)  # prop: proportion(비율)을 의미
 y <- prop.table(x)
 round(y * 100, 2)
 
@@ -65,17 +65,19 @@ hist(survey)
 
 pie(x1)
 
+head(data)
 
 # 실습: 생활비(cost) 변ㄴ수 대상 요약 통계량 구하기 
 length(data$cost)
 summary(data$cost)
 
 # 실습: 데이터 정제(결측치 제거)
-plot(data$cost)
+plot(data$cost)  # 극단치를 눈으로 확인
 data <- subset(data, data$cost >= 2 & data$cost <= 10)
 x <- data$cost
 mean(x)
 
+plot(x)  # 극단치 제거 후 확인
 
 # 실습: 생활비(cost) 변수를 대상으로 대표값 구하기 
 # 단계 1: 평균과 중위수 구하기 
@@ -97,21 +99,23 @@ length(x)
 head(x)
 x.t <- table(x)
 max(x.t)
+class(x.t)  # table
+str(x.t)
 x.t
 
 
 # 단계 2: 두 개의 행을 묶어서 matrix 생성
 x.m <- rbind(x.t)
-x.m  # x.t와 같음.
-class(x.m)
-str(x.m)
+x.m  # x.t와 같음. 하지만 시각적으로는 위의 x.t와 같아 보임.
+class(x.m)  # matrix, array
+str(x.m) 
+which(x.m[1, ] == 2)  # 빈도수가 2인 것
 which(x.m[1, ] == 18)
 
 # 단계 3: 데이터프레임으로 변경
 x.df <- as.data.frame(x.m)
 which(x.df[1, ] == 18)
-which(x.df[1, ] == 2)
-# 머지
+which(x.df[1, ] == 2)  # 빈도수가 2인 리스트 번호만 출력
 
 # 단계 4: 최빈수와 변량 확인
 x.df[1, 19]
@@ -230,6 +234,8 @@ round(y * 100, 2)
 
 
 # 단계 3: 나이(age) 변수의 리코딩과 비율계산
+# 리코딩 - 가독성을 높힘.
+# 이렇게 하는 이유: 식별성을 높이기 위해 새로운 컬럼을 만듦.
 data$age2[data$age <= 45] <- "중년층"
 data$age2[data$age >= 46 & data$age <= 59] <- "장년층"
 data$age2[data$age >= 60] <- "노년층"
@@ -264,3 +270,4 @@ y <- prop.table(x)
 round(y * 100, 2)
 
 head(data)
+

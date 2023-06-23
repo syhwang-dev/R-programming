@@ -309,7 +309,7 @@ sosul2_df %>%
   mutate(emotion = case_when(sScore > 0 ~ "긍정",
                              sScore < 0 ~ "부정",
                              TRUE       ~ "중립")) %>% 
-  filter(emotion != "중립") %>% 
+  filter(emotion != "중립") %>%  
   count(word, emotion, sort = TRUE) %>% 
   filter(str_length(word) > 1) %>% 
   pivot_wider(names_from = emotion, values_from = n, values_fill = 0)  %>% 

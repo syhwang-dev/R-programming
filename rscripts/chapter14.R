@@ -14,18 +14,19 @@ name <- 1:10
 # 단계 2: 과목 데이터프레임 생성
 subject <- data.frame(s1, s2, s3, s4, s5, s6)
 str(subject)
-
+subject
 
 
 # 실습: 변수의 주성분 분석
-# 단계 1: 주성분 부석으로 요인 수 알아보기 
-pc <- prcomp(subject)
+# 단계 1: 주성분 분으로 요인 수 알아보기 
+pc <- prcomp(subject) # prcomp: Principal Component
 summary(pc)
 plot(pc)
 
 # 단계 2: 고유값으로 요인 수 분석
 en <- eigen(cor(subject))
 names(en)
+en
 
 en$values
 en$vectors
@@ -47,7 +48,7 @@ result
 # 단계 2-2: 고유값으로 가정한 3개 요인으로 분석
 result <- factanal(subject, 
                    factor = 3, 
-                   rotation = "varimax", 
+                   rotation = "varimax",   # varimax: 축을 바꿈.
                    scores = "regression")
 result
 
@@ -64,18 +65,18 @@ print(result$loadings, cutoff = 0)
 
 # 실습: 요인점수를 이용한 요인적재량 시각화 
 # 단계 1: Factor1과 Factor2 요인적재량 시각화 
-plot(result$scores[ , c(1:2)],
+plot(result$scores[ , c(1:2)],  # 행은 모두 포함, 열은 1~2
      main = "Factor1과 Factor2 요인점수 행렬")
 
 text(result$scores[ , 1], result$scores[ , 2],
-     labels = name, cex = 0.7, pos = 3, col = "blue")
+     labels = name, cex = 0.7, pos = 3, col = "blue")  # 파란색: score를 의미
 
 # 단게 2: 요인적재량 추가
 points(result$loadings[ , c(1:2)], pch = 19, col = "red")
 
 text(result$loadings[ , 1], result$loadings[ , 2],
      labels = rownames(result$loadings),
-     cex = 0.8, pos = 3, col = "red")
+     cex = 0.8, pos = 3, col = "red")  # 빨간색: 요인적재량
 
 # 단계 3: Factor1과 Factor3 요인적재량 시각화
 plot(result$scores[ , c(1, 3)],
@@ -120,7 +121,7 @@ nat <- data.frame(subject$s1, subject$s2)
 # 단계 2: 요인별 산술평균 계산
 app_science <- round((app$subject.s5 + app$subject.s6) / ncol(app), 2)
 soc_science <- round((soc$subject.s3 + soc$subject.s4) / ncol(soc), 2)
-nat_science <- round((nat$subject.s1 + nat$subject.s2) / ncol(net), 2)
+nat_science <- round((nat$subject.s1 + nat$subject.s2) / ncol(nat), 2)
 
 # 단계 3: 상관관계 분석
 subject_factor_df <- data.frame(app_science, soc_science, nat_science)
@@ -172,6 +173,10 @@ drinking_water_factor_df <- data.frame(satisfaction, closeness, pertinence)
 colnames(drinking_water_factor_df) <- c("제품만족도", "제품친밀도", "제품적절성")
 cor(drinking_water_factor_df)
 
+# 상관관계 분석한 것을 고유값으로
+en2 <- eigen(cor(drinking_water_factor_df))
+en2
+
 length(satisfaction); length(closeness); length(pertinence)
 
 
@@ -179,7 +184,7 @@ length(satisfaction); length(closeness); length(pertinence)
 
 # 실습: 기술 통계량 구하기 
 # 단계 1: 데잍 가져오기 
-product <- read.csv("C:/Rwork/Part-III/product.csv", header = TRUE)
+product <- read.csv("C:/Rwork/Part-III/product.csv", header = TRUE, fileEncoding = "cp949", encoding = "UTF-8")
 head(product)
 
 # 단계 2: 기술 통계량
@@ -212,7 +217,7 @@ corrgram(product, upper.panel = panel.conf)
 corrgram(product, lower.panel = panel.conf)
 
 
-# 실습: 차트에 밀도곡선, 상관성, 유의확률(별표) 추가하기 
+# 실습: 차트에 밀도곡선, 상관성, 유의확률(별표) 추가하기
 # 단계 1: 패키지 설치 
 install.packages("PerformanceAnalytics")
 library(PerformanceAnalytics)
