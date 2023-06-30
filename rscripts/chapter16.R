@@ -40,7 +40,7 @@ plot(hc)
 
 # 실습: 신입사원의 면접시험 결과를 군집분석
 # 단계 1: 데이터 셋 가져오기 
-interview <- read.csv("C:/Rwork/Part-IV/interview.csv", header = TRUE)
+interview <- read.csv("C:/Rwork/Part-IV/interview.csv", header = TRUE, fileEncoding = "cp949", encoding = "UTF-8")
 names(interview)
 head(interview)
 
@@ -48,16 +48,18 @@ head(interview)
 interview_df <- interview[c(2:7)]
 idist <- dist(interview_df)
 head(idist)
+idist
 
 # 단계 3: 계층적 군집분석
 hc <- hclust(idist)
 hc
 
-# 단계 4: 군집분석 시각화
+# 단계 4: 군집분석 시각화0
 plot(hc, hang = -1)
 
 # 단계 5: 군집 단위 테두리 생성
 rect.hclust(hc, k = 3, border ="red")
+rect.hclust(hc, k = 5, border ="red")
 
 
 
@@ -78,6 +80,7 @@ summary(g3)
 
 # 실습: iris 데이터 셋을 대상으로 군집 수 자르기 
 # 단계 1: 유클리디안 거리 계산
+head(iris)
 idist <- dist(iris[1:4])
 hc <- hclust(idist)
 plot(hc, hang = -1)
@@ -85,6 +88,7 @@ plot(hc, hang = -1)
 # 단계 2: 군집 수 자르기 
 ghc <- cutree(hc, k = 3)
 ghc
+rect.hclust(hc, k = 5, border ="red")
 
 # 단계 3: iris 데이터 셋에 ghc 칼러 ㅁ추가 
 iris$ghc <- ghc
@@ -105,7 +109,9 @@ summary(g3[1:4])
 # 단계 1: 군집분석에 사용할 변수 추출
 library(ggplot2)
 data(diamonds)
+nrow(diamonds)
 t <- sample(1:nrow(diamonds), 1000)
+head(t)  # 난수가 뽑힘.
 test <- diamonds[t, ]
 dim(test)
 head(test)
@@ -154,6 +160,10 @@ library(arules)
 
 # 단계 2: 트랜잭션 객체 생성
 setwd("C:/Rwork/Part-IV")
+# tran <- read.transactions("tran.txt", format = "basket", sep = "," fileEncoding = "cp949")  # fileEncoding 지원을 하지 않아 에러 발생
+# 문제 발생: tran.txt 파일 안의 내용이 전부 한글
+# R 버전 업이 되며 더 엄격해져서 에러 발생
+# 다른 이름으로 저장: ansi → utf-8
 tran <- read.transactions("tran.txt", format = "basket", sep = ",")
 tran
 
@@ -167,6 +177,7 @@ inspect(rule)
 
 # 단계 5: 규칙 발견
 rule <- apriori(tran, parameter = list(supp = 0.1, conf = 0.1))
+# rule <- apriori(tran, parameter = list(supp = 0.5, conf = 0.1))
 inspect(rule)
 
 
@@ -266,6 +277,8 @@ library(arulesViz)
 
 # 단계 2: 연관규칙 시각화
 plot(ar3, method = "graph", control = list(type = "items"))
+# 잘 안 나오면 engine = "htmlwidget"추가
+plot(ar3, method = "graph", control = list(type = "items"), engine = "htmlwidget")
 
 
 # 실습: Groceries 데이터 셋으로 연관분석 하기 

@@ -11,7 +11,9 @@ x = product$제품_적절성
 df <- data.frame(x, y)
 
 # 단계 3: 단순 선형회귀 모델 생성
-result.lm <- lm(formula = y ~ x, data = df)
+result.lm <- lm(formula = y ~ x, data = df)  # lm: 리니어 모델 / y ~ x: x에 의한 y를 구하다
+# y는 x를 따르다. 꺼꾸로 이해하지 마라!!!!
+# 선형회귀 모델이 생성됨!
 
 # 단계 4: 회귀분석의 절편과 기울기
 result.lm
@@ -36,7 +38,7 @@ Y
 residuals(result.lm)[1:2]
 
 # 단계 5-6: 모델의 잔차와 회귀방정식에 의한 적합값으로부터 관측값 계산
--0.7359630 + 3.735963
+-0.7359630 + 3.735963  # 잔차계산
 
 
 # 실습: 선형 회귀분석 모델 시각화
@@ -48,6 +50,10 @@ result.lm <- lm(formula = y ~ x, data = product)
 
 # 단계 3: 회귀선
 abline(result.lm, col = "red")
+
+# 1 ~ 3을 한 번에 실행하기
+
+
 
 
 # 실습: 선형 회귀분석 결과보기 
@@ -73,6 +79,8 @@ vif(result.lm)
 
 # 실습: 다중 회귀분석 결과보기 
 summary(result.lm)
+
+#공선성은 하지 않아
 
 # 실습: 다중 공선성 문제 확인
 # 단계 1: 패키지 설치 및 데이터 로딩
@@ -172,8 +180,8 @@ idx <- sample(1:nrow(weather_df), nrow(weather_df) * 0.7)
 train <- weather_df[idx, ]
 test <- weather_df[-idx, ]
 
-# 단계 4: 로지스틱 회귀모델 생성
-weather_model <- glm(RainTomorrow ~ ., data = train, family = 'binomial')
+# 단계 4: 로지스틱 회귀모델 생성  //  로지스틱 회귀모델은 분류 모델이다.
+weather_model <- glm(RainTomorrow ~ ., data = train, family = 'binomial')  # binomial: 이진분류
 weather_model
 summary(weather_model)
 
