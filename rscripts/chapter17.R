@@ -4,10 +4,14 @@
 # 단계 1: AirPassengers 데이터 셋 가져오기 
 data(AirPassengers)
 
-# 단계 2: 차분 적용 - 평균 정상화
+# 단계 2: 차분 적용 - 평균 정상화 / 차분: 앞에서 뒤의 것을 빼는 것
 par(mfrow = c(1, 2))
 ts.plot(AirPassengers)
 diff <- diff(AirPassengers)
+# 원데이터 보기
+AirPassengers
+diff  
+
 plot(diff)
 
 # 단계 3: 로그 적용 - 분산 정상화화
@@ -24,7 +28,7 @@ str(WWWusage)
 WWWusage
 
 # 단계 2: 시계열 자료 추세선 시각화 
-X11()
+# X11()  # 안 해도 됨.
 ts.plot(WWWusage, type = "l", col = "red")
 
 
@@ -55,7 +59,7 @@ length(data)
 
 
 # 단계 2: 시계열 자료 생성 - 시계열 자료 형식으로 객체 생성
-tsdata <- ts(data, start = c(2016, 1), frequency = 12)
+tsdata <- ts(data, start = c(2016, 1), frequency = 12)  # ts를 이용해서 시계열을 넣음. ts 데이터를 만듦.
 tsdata
 
 # 단계 3: 추세선 확인 - 각 요인(추세, 순환, 계절, 불규칙)을 시각적으로 확인
@@ -63,15 +67,16 @@ ts.plot(tsdata)
 
 # 단계 4: 시계열 분해
 plot(stl(tsdata, "periodic"))
+# 데이터를 시계열로 분류함
+# 아주 엷게나마 알 수 있음.
 
 # 단계 5: 시계열 분해와 변동요인 제거 
-m <- decompose(tsdata)
+m <- decompose(tsdata)  # decompose 분해하다
 attributes(m)
-
 plot(m)
-
 par(mfrow = c(1, 1))
 plot(tsdata - m$seasonal)
+# 결과적으로 필요한 것은 단계 4가 아닌 5
 
 
 # 단계 6: 추세요인과 불규칙요인 제거 
